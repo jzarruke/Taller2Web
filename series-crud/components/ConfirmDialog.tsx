@@ -48,17 +48,17 @@ export function ConfirmDialog({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
       <div
         role="alertdialog"
         aria-modal="true"
         aria-labelledby="confirm-dialog-titulo"
         aria-describedby="confirm-dialog-mensaje"
-        className="w-full max-w-sm rounded-lg bg-white p-6 shadow-xl dark:bg-slate-900"
+        className="w-full max-w-sm border border-slate-300 bg-white p-5 dark:border-slate-700 dark:bg-slate-900"
       >
         <h2
           id="confirm-dialog-titulo"
-          className="text-lg font-semibold text-slate-900 dark:text-slate-100"
+          className="font-medium text-slate-900 dark:text-slate-100"
         >
           {titulo}
         </h2>
@@ -68,21 +68,19 @@ export function ConfirmDialog({
         >
           {mensaje}
         </p>
-        <div className="mt-6 flex justify-end gap-3">
+        <div className="mt-5 flex justify-end gap-2">
           <button
             type="button"
             onClick={onCancelar}
-            className="rounded-md px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
+            className="border border-slate-300 px-3 py-1.5 text-sm text-slate-700 dark:border-slate-700 dark:text-slate-300"
           >
             {textoCancelar}
           </button>
           <button
             type="button"
             onClick={onConfirmar}
-            className={`rounded-md px-4 py-2 text-sm font-medium text-white ${
-              peligroso
-                ? "bg-red-600 hover:bg-red-700"
-                : "bg-indigo-600 hover:bg-indigo-700"
+            className={`px-3 py-1.5 text-sm text-white ${
+              peligroso ? "bg-red-600" : "bg-slate-900"
             }`}
           >
             {textoConfirmar}

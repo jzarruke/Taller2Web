@@ -22,15 +22,15 @@ interface SeriesCardProps {
  */
 export function SeriesCard({ serie, onToggleFavorito }: SeriesCardProps) {
   return (
-    <div className="group relative flex flex-col overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-md dark:border-slate-800 dark:bg-slate-900">
+    <div className="relative flex flex-col border border-slate-200 dark:border-slate-800">
       <Link href={`/series/${serie.id}`} className="flex flex-1 flex-col">
         <PosterPlaceholder
           titulo={serie.titulo}
           posterUrl={serie.posterUrl}
-          className="h-40 w-full"
+          className="h-32 w-full"
         />
-        <div className="flex flex-1 flex-col gap-2 p-4">
-          <h3 className="line-clamp-1 font-semibold text-slate-900 dark:text-slate-100">
+        <div className="flex flex-1 flex-col gap-2 p-3">
+          <h3 className="line-clamp-1 font-medium text-slate-900 dark:text-slate-100">
             {serie.titulo}
           </h3>
           <div className="flex flex-wrap items-center gap-1.5">
@@ -42,7 +42,7 @@ export function SeriesCard({ serie, onToggleFavorito }: SeriesCardProps) {
           <p className="line-clamp-2 text-sm text-slate-500 dark:text-slate-400">
             {serie.sinopsis}
           </p>
-          <div className="mt-auto flex items-center justify-between pt-2 text-sm text-slate-500 dark:text-slate-400">
+          <div className="mt-auto flex items-center justify-between pt-1 text-sm text-slate-500 dark:text-slate-400">
             <span>{serie.anioEstreno}</span>
             <Calificacion valor={serie.calificacion} />
           </div>
@@ -51,7 +51,7 @@ export function SeriesCard({ serie, onToggleFavorito }: SeriesCardProps) {
       <FavoriteButton
         esFavorito={serie.favorito}
         onToggle={() => onToggleFavorito(serie.id)}
-        className="absolute right-3 top-3 bg-white/90 shadow dark:bg-slate-900/90"
+        className="absolute right-1 top-1 bg-white/80 dark:bg-slate-900/80"
       />
     </div>
   );

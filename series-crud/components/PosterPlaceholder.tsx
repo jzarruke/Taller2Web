@@ -6,8 +6,8 @@ interface PosterPlaceholderProps {
 
 /**
  * Poster de una serie. Si hay `posterUrl` se muestra la imagen; si no,
- * un bloque de color con la inicial del titulo. No usa `next/image`
- * porque la URL la escribe el usuario libremente en el formulario, y
+ * un bloque gris con la inicial del titulo. No usa `next/image` porque
+ * la URL la escribe el usuario libremente en el formulario, y
  * `next/image` exigiria configurar de antemano cada dominio permitido.
  */
 export function PosterPlaceholder({
@@ -29,7 +29,7 @@ export function PosterPlaceholder({
   const inicial = titulo.trim().charAt(0).toUpperCase() || "?";
   return (
     <div
-      className={`flex items-center justify-center bg-gradient-to-br from-indigo-500 to-purple-600 text-2xl font-semibold text-white ${className}`}
+      className={`flex items-center justify-center bg-slate-200 text-xl font-medium text-slate-500 dark:bg-slate-800 dark:text-slate-400 ${className}`}
       aria-hidden="true"
     >
       {inicial}

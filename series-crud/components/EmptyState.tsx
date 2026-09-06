@@ -6,8 +6,8 @@ interface EmptyStateProps {
 /** Estado vacio reutilizable: sin series, sin resultados de busqueda, etc. */
 export function EmptyState({ titulo, descripcion }: EmptyStateProps) {
   return (
-    <div className="flex flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-slate-300 px-6 py-16 text-center dark:border-slate-700">
-      <p className="text-lg font-medium text-slate-700 dark:text-slate-200">
+    <div className="flex flex-col items-center justify-center gap-1 border border-slate-200 px-6 py-14 text-center dark:border-slate-800">
+      <p className="font-medium text-slate-700 dark:text-slate-200">
         {titulo}
       </p>
       {descripcion && (

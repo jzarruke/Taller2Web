@@ -27,7 +27,7 @@ export default function PaginaInicio() {
         </div>
         <Link
           href="/series/nueva"
-          className="inline-flex items-center justify-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700"
+          className="inline-flex items-center justify-center border border-slate-900 bg-slate-900 px-4 py-2 text-sm font-medium text-white dark:border-slate-100 dark:bg-slate-100 dark:text-slate-900"
         >
           + Nueva serie
         </Link>

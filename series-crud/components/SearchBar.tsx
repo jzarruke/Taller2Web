@@ -17,21 +17,13 @@ export function SearchBar({
   placeholder = "Buscar series por nombre...",
 }: SearchBarProps) {
   return (
-    <div className="relative">
-      <span
-        className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-slate-400"
-        aria-hidden="true"
-      >
-        🔍
-      </span>
-      <input
-        type="search"
-        value={valor}
-        onChange={(evento) => onCambiar(evento.target.value)}
-        placeholder={placeholder}
-        aria-label="Buscar series por nombre"
-        className="w-full rounded-md border border-slate-300 bg-white py-2 pl-9 pr-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
-      />
-    </div>
+    <input
+      type="search"
+      value={valor}
+      onChange={(evento) => onCambiar(evento.target.value)}
+      placeholder={placeholder}
+      aria-label="Buscar series por nombre"
+      className="w-full border border-slate-300 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-slate-400 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+    />
   );
 }
