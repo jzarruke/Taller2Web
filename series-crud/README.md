@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Series CRUD
 
-## Getting Started
+Aplicacion de CRUD de series de television hecha con Next.js (App Router),
+TypeScript, React y Tailwind CSS. Permite ver, buscar, crear, editar y
+eliminar series, y marcarlas como favoritas. Todo se guarda en el
+localStorage del navegador, asi que los cambios sobreviven a recargar la
+pagina.
 
-First, run the development server:
+## Stack
+
+- Next.js 16 (App Router)
+- React 19
+- TypeScript
+- Tailwind CSS v4
+
+## Instalacion y ejecucion
+
+Requiere Node.js 20.9+ y pnpm.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abre [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Otros scripts disponibles:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+pnpm build   # build de produccion
+pnpm start   # sirve el build de produccion
+pnpm lint    # eslint
+```
 
-## Learn More
+## Funcionalidades
 
-To learn more about Next.js, take a look at the following resources:
+- Listado de series con busqueda por nombre en tiempo real.
+- Ver el detalle completo de una serie.
+- Crear series con un formulario validado.
+- Editar series existentes (formulario pre-llenado).
+- Eliminar series con dialogo de confirmacion.
+- Marcar/desmarcar series como favoritas.
+- Persistencia en localStorage: lo creado, editado, eliminado y los
+  favoritos sobreviven a recargar la pagina.
+- Loading skeleton mientras se hidratan los datos guardados.
+- Manejo de errores (por ejemplo, si localStorage esta bloqueado o los
+  datos guardados estan corruptos).
+- Diseño responsive.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Estructura del proyecto
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+types/       Modelo de datos (interfaz Serie, tipos del formulario, limites de validacion)
+data/        Datos semilla (solo se usan la primera vez, antes de que exista algo en localStorage)
+lib/         Funciones puras: acceso seguro a localStorage, generacion de ids,
+             validacion del formulario, filtrado por titulo
+context/     SeriesContext: estado compartido (series, cargando, error) y las
+             operaciones crearSerie/actualizarSerie/eliminarSerie/toggleFavorito
+components/  Componentes de UI, de los mas pequeños (Badge, Calificacion, FavoriteButton)
+             a los que arman una pantalla completa (SeriesExplorer, SerieDetalle, SerieForm)
+app/         Rutas (App Router): "/", "/series/nueva", "/series/[id]", "/series/[id]/editar"
+```
 
-## Deploy on Vercel
+## Decisiones de diseño
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Persistencia**: `lib/storage.ts` es el unico lugar del proyecto que
+  toca `window.localStorage`, siempre protegido con
+  `typeof window !== "undefined"` (ese codigo tambien se evalua en el
+  servidor durante el render). Devuelve si la lectura/escritura tuvo
+  exito para poder mostrar un error claro en vez de fallar en silencio.
+- **Estado compartido**: en vez de repetir `useState` y logica de
+  localStorage en cada pagina, todo vive en `SeriesProvider`
+  (Context API). La pagina principal, el detalle, crear y editar leen y
+  escriben desde el mismo lugar.
+- **Server vs Client Components**: `app/layout.tsx` y las paginas en
+  `app/` se quedan como Server Components. Solo los componentes que
+  realmente necesitan hooks o eventos (`SeriesExplorer`, `SerieForm`,
+  `SerieDetalle`, `FavoriteButton`, `ConfirmDialog`, etc.) llevan
+  `"use client"`.
+- **Validacion**: una sola funcion pura (`lib/validarSerie.ts`) valida
+  los datos del formulario, usada tanto al crear como al editar para no
+  duplicar las reglas. Corre en cada render, asi que los errores se
+  actualizan en tiempo real.
+- **Rutas dinamicas**: `params` se recibe como `Promise` (asi funciona
+  en Next.js 16) y se resuelve con `await` en las paginas `page.tsx` de
+  `/series/[id]` y `/series/[id]/editar`.
