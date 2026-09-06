@@ -15,8 +15,8 @@ export function NuevaSerieForm() {
   const router = useRouter();
 
   function manejarEnvio(datos: SerieFormData) {
-    crearSerie(datos);
-    router.push("/");
+    const nuevaSerie = crearSerie(datos);
+    router.push(`/series/${nuevaSerie.id}`);
   }
 
   return (

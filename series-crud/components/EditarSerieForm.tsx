@@ -51,7 +51,7 @@ export function EditarSerieForm({ id }: EditarSerieFormProps) {
 
   function manejarEnvio(datos: SerieFormData) {
     actualizarSerie(id, datos);
-    router.push("/");
+    router.push(`/series/${id}`);
   }
 
   return (
